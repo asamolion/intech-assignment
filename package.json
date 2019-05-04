@@ -1,0 +1,26 @@
+{
+  "name": "assignment",
+  "version": "1.0.0",
+  "description": "Assignment submitted to Intech Process Automation",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Muhammad Osama Arshad",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "prettier": "^1.17.0",
+    "sass": "^1.20.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "downshift": "^3.2.10",
+    "dropdown": "^0.2.0",
+    "fuzzysort": "^1.1.4",
+    "leaflet": "^1.4.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-leaflet": "^2.2.1"
+  }
+}
