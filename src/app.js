@@ -5,6 +5,7 @@ import Fuzzysort from 'fuzzysort';
 
 import ApiClient from './api.js';
 import Map from './components/Map.js';
+import { calculateDistance } from './utils.js';
 
 import './style.scss';
 
@@ -14,11 +15,15 @@ class App extends React.Component {
 
 		this.state = {
 			stations: [],
-			selectedStation: ''
+			filteredStations: [],
+			selectedStation: '',
+			distance: ''
 		};
+
+		this.handleChange = this.handleChange.bind(this);
 	}
 
-	componentDidMount() {
+	reset() {
 		Promise.all([
 			ApiClient.getStationInformation(),
 			ApiClient.getStationStatus()
@@ -34,23 +39,67 @@ class App extends React.Component {
 				});
 			});
 			this.setState({
-				stations
+				stations,
+				filteredStations: stations
 			});
 		});
 	}
 
+	componentDidMount() {
+		this.reset();
+	}
+
+	handleChange(evt) {
+		this.setState(
+			{
+				[evt.target.name]: evt.target.value
+			},
+			this.filterStations
+		);
+	}
+
+	filterStations() {
+		const { stations, selectedStation, distance } = this.state;
+
+		if (!distance || !selectedStation) {
+			this.setState({
+				filteredStations: stations
+			});
+			return;
+		}
+
+		const filteredStations = stations.filter(station => {
+			return (
+				calculateDistance(
+					selectedStation.lat,
+					selectedStation.lon,
+					station.lat,
+					station.lon
+				) <= distance
+			);
+		});
+
+		this.setState({
+			filteredStations
+		});
+	}
+
 	renderSearch() {
-		const { searchInput, stations } = this.state;
+		const { searchInput, stations, distance } = this.state;
+
 		return (
 			<React.Fragment>
 				<Downshift
 					defaultHighlightedIndex={0}
 					onSelect={selectedItem => {
-						this.setState({
-							selectedStation: this.state.stations.find(
-								station => station.name === selectedItem
-							)
-						});
+						this.setState(
+							{
+								selectedStation: this.state.stations.find(
+									station => station.name === selectedItem
+								)
+							},
+							this.filterStations
+						);
 					}}
 				>
 					{({
@@ -110,10 +159,11 @@ class App extends React.Component {
 				<div className="field">
 					<input
 						name="distance"
-						className="distance-field"
 						type="number"
-						value={searchInput}
-						onChange={this.handleChange}
+						value={distance}
+						onChange={evt => {
+							this.handleChange(evt);
+						}}
 					/>
 					KM
 				</div>
@@ -122,13 +172,13 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { stations } = this.state;
+		const { filteredStations } = this.state;
 		return (
 			<div>
 				{this.renderSearch()}
 				<hr />
 
-				<Map stations={stations} />
+				<Map stations={filteredStations} />
 			</div>
 		);
 	}
