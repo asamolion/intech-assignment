@@ -126,7 +126,7 @@ class App extends React.Component {
 					onSelect={selectedItem => {
 						this.setState(
 							{
-								selectedStation: this.state.stations.find(
+								selectedStation: currentData.find(
 									station => station.name === selectedItem
 								)
 							},
@@ -162,10 +162,14 @@ class App extends React.Component {
 							<div className="autocomplete" {...getMenuProps()}>
 								<div className="autocomplete-items">
 									{isOpen
-										? Fuzzysort.go(inputValue, stations, {
-												key: 'name',
-												limit: 20
-										  })
+										? Fuzzysort.go(
+												inputValue,
+												currentData,
+												{
+													key: 'name',
+													limit: 20
+												}
+										  )
 												.map(
 													suggestion =>
 														suggestion.target

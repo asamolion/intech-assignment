@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Bar, Line as LineChart } from 'react-chartjs';
+import { Line as LineChart } from 'react-chartjs';
 
 import { reduceStations } from '../utils.js';
 
@@ -24,10 +24,11 @@ const HistoricalUsage = props => {
 			data: current.reduce(reduceStations, [0, 0, 0, 0, 0])
 		});
 	});
+
 	return (
 		<div>
 			<h1>Historical Usage</h1>
-			<Bar data={data} width={800} height={400} redraw />
+			<LineChart data={data} width={800} height={400} redraw />
 		</div>
 	);
 };
