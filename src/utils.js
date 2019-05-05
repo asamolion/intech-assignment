@@ -20,4 +20,14 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 	}
 }
 
-export { calculateDistance };
+function reduceStations(sum, station) {
+	sum[0] += station.num_bikes_available;
+	sum[1] += station.num_ebikes_available;
+	sum[2] += station.num_bikes_disabled;
+	sum[3] += station.num_docks_available;
+	sum[4] += station.num_docks_disabled;
+
+	return sum;
+}
+
+export { calculateDistance, reduceStations };

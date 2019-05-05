@@ -5,6 +5,8 @@ import Fuzzysort from 'fuzzysort';
 
 import ApiClient from './api.js';
 import Map from './components/Map.js';
+import CurrentUsage from './components/CurrentUsage.js';
+import HistoricalUsage from './components/HistoricalUsage.js';
 import { calculateDistance } from './utils.js';
 
 import './style.scss';
@@ -14,7 +16,9 @@ class App extends React.Component {
 		super(props);
 
 		this.state = {
-			stations: [],
+			lastUpdated: Date.now(),
+			history: [],
+			currentData: [],
 			filteredStations: [],
 			selectedStation: '',
 			distance: ''
@@ -39,7 +43,8 @@ class App extends React.Component {
 				});
 			});
 			this.setState({
-				stations,
+				history: [stations],
+				currentData: stations,
 				filteredStations: stations
 			});
 		});
@@ -47,6 +52,33 @@ class App extends React.Component {
 
 	componentDidMount() {
 		this.reset();
+
+		setInterval(() => {
+			const { history, lastUpdated } = this.state;
+
+			Promise.all([
+				ApiClient.getStationInformation(),
+				ApiClient.getStationStatus()
+			]).then(res => {
+				const stationInformation = res[0].data.data.stations;
+				const stationStatus = res[1].data.data.stations;
+				const stations = [];
+
+				if (res.last_updated > lastUpdated) {
+					stationInformation.forEach((station, index) => {
+						stations.push({
+							...station,
+							...stationStatus[index]
+						});
+					});
+
+					this.setState(prevState => ({
+						currentData: stations,
+						history: prevState.history.concat([stations])
+					}));
+				}
+			});
+		}, 2000);
 	}
 
 	handleChange(evt) {
@@ -59,16 +91,16 @@ class App extends React.Component {
 	}
 
 	filterStations() {
-		const { stations, selectedStation, distance } = this.state;
+		const { currentData, selectedStation, distance } = this.state;
 
 		if (!distance || !selectedStation) {
 			this.setState({
-				filteredStations: stations
+				filteredStations: currentData
 			});
 			return;
 		}
 
-		const filteredStations = stations.filter(station => {
+		const filteredStations = currentData.filter(station => {
 			return (
 				calculateDistance(
 					selectedStation.lat,
@@ -85,7 +117,7 @@ class App extends React.Component {
 	}
 
 	renderSearch() {
-		const { searchInput, stations, distance } = this.state;
+		const { searchInput, currentData, distance } = this.state;
 
 		return (
 			<React.Fragment>
@@ -123,6 +155,7 @@ class App extends React.Component {
 									className="search-field"
 									type="text"
 									name="searchQuery"
+									placeholder="Station"
 								/>
 							</div>
 
@@ -160,11 +193,12 @@ class App extends React.Component {
 					<input
 						name="distance"
 						type="number"
+						placeholder="Distance"
 						value={distance}
 						onChange={evt => {
 							this.handleChange(evt);
 						}}
-					/>
+					/>{' '}
 					KM
 				</div>
 			</React.Fragment>
@@ -172,13 +206,25 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { filteredStations } = this.state;
+		const {
+			currentData,
+			filteredStations,
+			history,
+			selectedStation
+		} = this.state;
 		return (
 			<div>
 				{this.renderSearch()}
 				<hr />
 
 				<Map stations={filteredStations} />
+
+				<CurrentUsage
+					station={selectedStation}
+					allStations={currentData}
+				/>
+
+				<HistoricalUsage data={history} />
 			</div>
 		);
 	}
