@@ -85,3 +85,4 @@ typings/
 
 # Custom
 dist/
+cypress/videos/

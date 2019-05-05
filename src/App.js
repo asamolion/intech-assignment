@@ -69,7 +69,7 @@ class App extends React.Component {
 					history: prevState.history.concat([stations])
 				}));
 			});
-		}, 2000);
+		}, 60000);
 	}
 
 	componentWillUnmount() {
@@ -151,6 +151,7 @@ class App extends React.Component {
 									type="text"
 									name="searchQuery"
 									placeholder="Station"
+									data-testid="search-input"
 								/>
 							</div>
 
@@ -192,6 +193,7 @@ class App extends React.Component {
 					<input
 						name="distance"
 						type="number"
+						data-testid="distance-input"
 						placeholder="Distance"
 						value={distance}
 						onChange={evt => {

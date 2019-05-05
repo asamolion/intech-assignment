@@ -1,0 +1,99 @@
+{
+    "last_updated": 1557055308,
+    "ttl": 10,
+    "data": {
+        "stations": [
+            {
+                "station_id": "72",
+                "external_id": "66db237e-0aca-11e7-82f6-3863bb44ef7c",
+                "name": "W 52 St & 11 Ave",
+                "short_name": "6926.01",
+                "lat": 40.76727216,
+                "lon": -73.99392888,
+                "region_id": 71,
+                "rental_methods": ["CREDITCARD", "KEY"],
+                "capacity": 55,
+                "rental_url": "http://app.citibikenyc.com/S6Lr/IBV092JufD?station_id=72",
+                "electric_bike_surcharge_waiver": false,
+                "eightd_has_key_dispenser": false,
+                "has_kiosk": true
+            },
+            {
+                "station_id": "79",
+                "external_id": "66db269c-0aca-11e7-82f6-3863bb44ef7c",
+                "name": "Franklin St & W Broadway",
+                "short_name": "5430.08",
+                "lat": 40.71911552,
+                "lon": -74.00666661,
+                "region_id": 71,
+                "rental_methods": ["CREDITCARD", "KEY"],
+                "capacity": 33,
+                "rental_url": "http://app.citibikenyc.com/S6Lr/IBV092JufD?station_id=79",
+                "electric_bike_surcharge_waiver": false,
+                "eightd_has_key_dispenser": false,
+                "has_kiosk": true
+            },
+            {
+                "station_id": "82",
+                "external_id": "66db277a-0aca-11e7-82f6-3863bb44ef7c",
+                "name": "St James Pl & Pearl St",
+                "short_name": "5167.06",
+                "lat": 40.71117416,
+                "lon": -74.00016545,
+                "region_id": 71,
+                "rental_methods": ["CREDITCARD", "KEY"],
+                "capacity": 27,
+                "rental_url": "http://app.citibikenyc.com/S6Lr/IBV092JufD?station_id=82",
+                "electric_bike_surcharge_waiver": false,
+                "eightd_has_key_dispenser": false,
+                "has_kiosk": true
+            },
+            {
+                "station_id": "83",
+                "external_id": "66db281e-0aca-11e7-82f6-3863bb44ef7c",
+                "name": "Atlantic Ave & Fort Greene Pl",
+                "short_name": "4354.07",
+                "lat": 40.68382604,
+                "lon": -73.97632328,
+                "region_id": 71,
+                "rental_methods": ["CREDITCARD", "KEY"],
+                "capacity": 62,
+                "rental_url": "http://app.citibikenyc.com/S6Lr/IBV092JufD?station_id=83",
+                "electric_bike_surcharge_waiver": false,
+                "eightd_has_key_dispenser": false,
+                "has_kiosk": true
+            },
+            {
+                "station_id": "119",
+                "external_id": "66db2953-0aca-11e7-82f6-3863bb44ef7c",
+                "name": "Park Ave & St Edwards St",
+                "short_name": "4700.06",
+                "lat": 40.69608941,
+                "lon": -73.97803415,
+
+                "region_id": 71,
+                "rental_methods": ["CREDITCARD", "KEY"],
+                "capacity": 19,
+                "rental_url": "http://app.citibikenyc.com/S6Lr/IBV092JufD?station_id=119",
+                "electric_bike_surcharge_waiver": false,
+                "eightd_has_key_dispenser": false,
+                "has_kiosk": true
+            },
+            {
+                "station_id": "120",
+                "external_id": "66db29e6-0aca-11e7-82f6-3863bb44ef7c",
+                "name": "Lexington Ave & Classon Ave",
+                "short_name": "4452.03",
+                "lat": 40.68676793,
+                "lon": -73.95928168,
+                "region_id": 71,
+                "rental_methods": ["CREDITCARD", "KEY"],
+                "capacity": 19,
+                "rental_url": "http://app.citibikenyc.com/S6Lr/IBV092JufD?station_id=120",
+                "electric_bike_surcharge_waiver": false,
+                "eightd_has_key_dispenser": false,
+                "has_kiosk": true
+            }
+        ]
+    }
+}
