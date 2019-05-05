@@ -86,3 +86,4 @@ typings/
 # Custom
 dist/
 cypress/videos/
+cypress/screenshots/
