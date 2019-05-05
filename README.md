@@ -29,3 +29,5 @@ The tests are written in Cypress so they are e2e tests rather than unit tests. T
 ```
 $ npx cypress open
 ```
+
+**NOTE**: The Cypress tests require that the app be running in the background. So please make sure of that.
