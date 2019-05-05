@@ -45,7 +45,7 @@ const CurrentUsage = props => {
 	return (
 		<div className="">
 			<h1>Current Usage - {station ? station.name : 'Global'}</h1>
-			<BarChart data={chartData} width={800} height={400} redraw />
+			<BarChart data={chartData} width={800} height={400} />
 		</div>
 	);
 };

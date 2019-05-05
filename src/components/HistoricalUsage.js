@@ -28,7 +28,13 @@ const HistoricalUsage = props => {
 	return (
 		<div>
 			<h1>Historical Usage</h1>
-			<LineChart data={data} width={800} height={400} redraw />
+			<LineChart
+				data={data}
+				width={800}
+				height={400}
+				options={{ animation: false }}
+				redraw
+			/>
 		</div>
 	);
 };

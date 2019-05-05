@@ -4,12 +4,13 @@
   "description": "Assignment submitted to Intech Process Automation",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "parcel build src/index.html"
   },
   "author": "Muhammad Osama Arshad",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^5.16.0",
+    "parcel-bundler": "^1.12.3",
     "prettier": "^1.17.0",
     "sass": "^1.20.1"
   },

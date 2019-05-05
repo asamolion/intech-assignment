@@ -11,6 +11,26 @@ import { calculateDistance } from './utils.js';
 
 import './style.scss';
 
+function getStationData(cb) {
+	Promise.all([
+		ApiClient.getStationInformation(),
+		ApiClient.getStationStatus()
+	]).then(res => {
+		const stationInformation = res[0].data.data.stations;
+		const stationStatus = res[1].data.data.stations;
+		const stations = [];
+
+		stationInformation.forEach((station, index) => {
+			stations.push({
+				...station,
+				...stationStatus[index]
+			});
+		});
+
+		cb(stations);
+	});
+}
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -28,20 +48,7 @@ class App extends React.Component {
 	}
 
 	reset() {
-		Promise.all([
-			ApiClient.getStationInformation(),
-			ApiClient.getStationStatus()
-		]).then(res => {
-			const stationInformation = res[0].data.data.stations;
-			const stationStatus = res[1].data.data.stations;
-			const stations = [];
-
-			stationInformation.forEach((station, index) => {
-				stations.push({
-					...station,
-					...stationStatus[index]
-				});
-			});
+		getStationData(stations => {
 			this.setState({
 				history: [stations],
 				currentData: stations,
@@ -53,32 +60,20 @@ class App extends React.Component {
 	componentDidMount() {
 		this.reset();
 
-		setInterval(() => {
+		this.historyInterval = setInterval(() => {
 			const { history, lastUpdated } = this.state;
 
-			Promise.all([
-				ApiClient.getStationInformation(),
-				ApiClient.getStationStatus()
-			]).then(res => {
-				const stationInformation = res[0].data.data.stations;
-				const stationStatus = res[1].data.data.stations;
-				const stations = [];
-
-				if (res.last_updated > lastUpdated) {
-					stationInformation.forEach((station, index) => {
-						stations.push({
-							...station,
-							...stationStatus[index]
-						});
-					});
-
-					this.setState(prevState => ({
-						currentData: stations,
-						history: prevState.history.concat([stations])
-					}));
-				}
+			getStationData(stations => {
+				this.setState(prevState => ({
+					currentData: stations,
+					history: prevState.history.concat([stations])
+				}));
 			});
 		}, 2000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.historyInterval);
 	}
 
 	handleChange(evt) {
@@ -117,7 +112,7 @@ class App extends React.Component {
 	}
 
 	renderSearch() {
-		const { searchInput, currentData, distance } = this.state;
+		const { currentData, distance } = this.state;
 
 		return (
 			<React.Fragment>
@@ -216,6 +211,7 @@ class App extends React.Component {
 			history,
 			selectedStation
 		} = this.state;
+
 		return (
 			<div>
 				{this.renderSearch()}
@@ -234,4 +230,4 @@ class App extends React.Component {
 	}
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export default App;
